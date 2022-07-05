@@ -1,0 +1,247 @@
+WindowManager:
+    WelcomeScreen:
+    VotingOrLiveScreen:
+    VotingScreen:
+
+<WelcomeScreen>:
+    name: "welcome"
+    BoxLayout: 
+        padding: 10
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label: 
+            text: "The Move"
+            font_size: 64
+            text_size: self.size
+            valign: "bottom"
+            halign: "center"
+            size_hint: 1, 0.5
+
+        Label1: 
+            text: "Welcome to The Move! Plan your nights better by seeing what bars and clubs are the most popular."
+            #text_size: self.width, None
+            font_size: 24
+            text_size: self.size
+            valign: "top"
+            halign: "center"
+            size_hint: 1, 0.5
+            background_color: (1, 0, 0, 1)
+            background_normal: ""
+
+        AnchorLayout: 
+            NextButton1:
+                text: "Continue"
+                size_hint: (0.5, 0.25)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: 
+                    app.root.current = "voting_or_live"
+                    root.manager.transition.direction = "left"
+
+
+<VotingOrLiveScreen>:
+    name: "voting_or_live"
+    BoxLayout: 
+        orientation: "vertical"
+        size: root.width, root.height
+        spacing: 20
+        padding: 50
+        VotingButton:
+            text: "Voting\nSee how other users are planning to spend their night, and vote where you want to go!"
+            size_hint: (1, 0.5)
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            on_release: 
+                app.root.current = "voting"
+                root.manager.transition.direction = "left"
+        LiveDataButton:
+            text: "Live Data (Coming Soon)"
+            size_hint: (1, 0.5)
+        AnchorLayout: 
+            Button:
+                text: "Back"
+                size_hint: (0.5, 0.25)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: 
+                    app.root.current = "welcome"
+                    root.manager.transition.direction = "right"
+
+
+<VotingScreen>:
+    name: "voting"
+    ScrollView: 
+        StackLayout: 
+            size_hint: 1, None
+            height: self.minimum_height + 100
+
+            Label: 
+                size_hint: (1, None)
+                height: "100dp"
+            ToggleButton: 
+                name: "0"
+                id: 0
+                text: "Grog\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "1"
+                id: 1
+                text: "Fats Midtown\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "2"
+                id: 2
+                text: "Fats Downtown\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "3"
+                id: 3
+                text: "White Buffalo\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "4"
+                id: 4
+                text: "The Lab\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "5"
+                id: 5
+                text: "The Social\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "6"
+                id: 6
+                text: "Bricks\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "7"
+                id: 7
+                text: "JJ's\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "8"
+                id: 8
+                text: "Rowdy Reptile\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+            ToggleButton:
+                name: "9"
+                id: 9
+                text: "Salty Dog Saloon\n Number of votes: 0"
+                halign: "center"
+                group: "clubs"
+                size_hint: (1, None)
+                height: "100dp"
+                on_state: root.togglePressed(self)
+    VoteStatusLabel: 
+        id: hasVoted
+        text: root.hasVotedText
+        size_hint: (1, None)
+        halign: "center"
+        pos_hint:{"center_x":.5, "center_y":0.95}
+        height: "100dp"
+    BoxLayout:
+        size_hint: 1, None
+        height: "100dp"
+        orientation: "horizontal"
+        Button:
+            text: "Back"
+            on_release: 
+                app.root.current = "voting_or_live"
+                root.manager.transition.direction = "right"
+        Button: 
+            text: "Submit Vote"
+            on_release: root.submitPressed()
+
+#welcome screen 
+<Label1@Label>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (0, 0, 0, 1)
+        RoundedRectangle: 
+            size: self.size
+            pos: self.pos
+            radius: [5]
+
+<NextButton1@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (48/255, 84/255, 150/255, 1)
+        RoundedRectangle: 
+            size: self.size
+            pos: self.pos
+            radius: [20]
+    
+
+#voting or live data
+<VotingButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (48/255, 84/255, 150/255, 1)
+        RoundedRectangle: 
+            size: self.size
+            pos: self.pos
+            radius: [10]
+
+<LiveDataButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (48/255, 84/255, 150/255, 1)
+        RoundedRectangle: 
+            size: self.size
+            pos: self.pos
+            radius: [10]
+
+#voting screen
+<VoteStatusLabel@Label>
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (0, 0, 0, 1)
+        Rectangle: 
+            size: self.size
+            pos: self.pos
