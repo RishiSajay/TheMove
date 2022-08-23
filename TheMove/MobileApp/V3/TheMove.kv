@@ -1,0 +1,453 @@
+#:import Gradient kivy_gradient.Gradient
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+#:set orange_color1 get_color_from_hex("DC660F")
+#:set orange_color2 get_color_from_hex("C73E09")
+
+#:set blue_color1 get_color_from_hex("087CDF")
+#:set blue_color2 get_color_from_hex("C73E09")
+
+#:set green_color1 get_color_from_hex("28A20A")
+
+WindowManager:
+    canvas.before: 
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: 
+                Gradient.vertical(
+                get_color_from_hex("000000"),
+                get_color_from_hex("212224"),
+                get_color_from_hex("000000"),
+                )
+    WelcomeScreen:
+    CreateUserScreen:
+    LoginScreen:
+    VotingOrLiveScreen:
+    VotingScreen:
+
+<WelcomeScreen>:
+    name: "welcome"
+    #canvas.before:
+        #Rectangle:
+            #pos: self.pos
+            #size: self.size
+            #source: 'images/heartbeat1.jpg'
+    BoxLayout: 
+        padding: 0
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label: 
+            markup: True
+            text: "[color=#DC660F]The[/color] [color=#0043A6][b]Move[/b][/color]"
+            font_size: 64
+            text_size: self.size
+            valign: "bottom"
+            halign: "center"
+            size_hint: 1, 0.5
+
+        Label: 
+            text: "Welcome to The Move! Plan your nights better by seeing what bars and clubs are the most popular"
+            size_hint: (0.8, 1)
+            pos_hint: {"center_x": 0.5}
+            font_size: 16
+            text_size: self.size
+            valign: "top"
+            halign: "center"
+        #FitImage:
+        #    size_hint_y: 1
+        #    source: 'images/heartbeat1.jpg'
+
+        AnchorLayout: 
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 20
+                spacing: 20
+                NextButton1:
+                    text: "New User"
+                    size_hint: (0.5, 0.25)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                    on_release: 
+                        app.root.current = "create_user_screen"
+                        root.manager.transition.direction = "up"
+                NextButton1:
+                    text: "Login"
+                    size_hint: (0.5, 0.25)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                    on_release: 
+                        app.root.current = "login_screen"
+                        root.manager.transition.direction = "left"
+<CreateUserScreen>:
+    name: "create_user_screen"
+    BoxLayout: 
+        orientation: "vertical"
+        Label: 
+            text_size: self.size
+            font_size: 14
+            #background_color: (1, 1, 1, 1)
+            valign: "center"
+            halign: "center"
+            markup: True
+            pos_hint: {"center_x": 0.5}
+            text: "[color=#DC660F][size=30]Welcome![/size][/color] \n\nPlease create your account below"
+        BoxLayout:
+            padding: 32, 0, 32, 0
+            spacing: 20
+            orientation: "vertical"
+            TextInput1:
+                #pos_hint: {"center_y": 0.3}
+                font_size: 16
+                id: newUsernameInput
+            TextInput2:
+                #pos_hint: {"center_y": 0.3}
+                font_size: 16
+                id: newPasswordInput
+        BoxLayout: 
+            padding: 10
+            spacing: 10
+            BackButton1:
+                text: "Back"
+                size_hint: (0.5, 0.5)
+                #pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: 
+                    app.root.current = "welcome"
+                    root.manager.transition.direction = "down"
+            SubmitButton1: 
+                text: "Create"
+                size_hint: (0.5, 0.5)
+                #pos_hint: {"center_y": 0.25}
+                on_release: 
+                    root.createPressed()
+        Label: 
+            id: createUserDisplay
+            text_size: self.size
+            valign: "center"
+            halign: "center"
+            text: root.createUserText
+
+<LoginScreen>:
+    name: "login_screen"
+    BoxLayout: 
+        orientation: "vertical"
+        Label: 
+            text_size: self.size
+            font_size: 14
+            #background_color: (1, 1, 1, 1)
+            valign: "center"
+            halign: "center"
+            markup: True
+            pos_hint: {"center_x": 0.5}
+            text: "[color=#DC660F][size=30]Welcome Back![/size][/color] \n\nPLease input your Username and Password below"
+        BoxLayout:
+            padding: 32, 0, 32, 0
+            spacing: 20
+            orientation: "vertical"
+            TextInput1:
+                #pos_hint: {"center_y": 0.3}
+                font_size: 16
+                id: usernameInput
+            TextInput2:
+                #pos_hint: {"center_y": 0.3}
+                font_size: 16
+                id: passwordInput
+        BoxLayout: 
+            padding: 10
+            spacing: 10
+            BackButton1:
+                text: "Back"
+                size_hint: (0.5, 0.5)
+                #pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: 
+                    app.root.current = "welcome"
+                    root.manager.transition.direction = "right"
+            SubmitButton1: 
+                text: "Login"
+                size_hint: (0.5, 0.5)
+                #pos_hint: {"center_y": 0.25}
+                on_release: 
+                    root.submitLoginPressed()
+        Label: 
+            id: newLoginDisplay
+            text_size: self.size
+            valign: "center"
+            halign: "center"
+            text: root.newLoginText
+
+
+<VotingOrLiveScreen>:
+    name: "voting_or_live"
+    BoxLayout: 
+        orientation: "vertical"
+        size: root.width, root.height
+        spacing: 20
+        padding: 50
+        VotingButton:
+            font_size: 12
+            markup: True
+            text: "[color=#DC660F][size=24]Voting[/size]\nSee how other users are planning to spend their night, and vote where you want to go![/color]"
+            size_hint: (1, 0.5)
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            on_release: 
+                app.root.current = "voting"
+                root.manager.transition.direction = "left"
+        LiveDataButton:
+            font_size: 18
+            text: "Live Data (Coming Soon)"
+            size_hint: (1, 0.5)
+        AnchorLayout: 
+            BackButton2:
+                text: "Back"
+                size_hint: (0.5, 0.25)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: 
+                    app.root.current = "login_screen"
+                    root.manager.transition.direction = "right"
+
+
+<VotingScreen>:
+    name: "voting"
+    ScrollView: 
+        canvas.before: 
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                texture: 
+                    Gradient.vertical(
+                    get_color_from_hex("000000"),
+                    get_color_from_hex("212224"),
+                    get_color_from_hex("000000")
+                    )
+        StackLayout:
+            size_hint: 1, None
+            height: self.minimum_height + 100
+            spacing: 20
+            padding: 20
+            Label: 
+                size_hint: (1, None)
+                height: "60dp"
+            ToggleButton1: 
+                name: "0"
+                id: 0
+                text: "[size=20]Grog[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton2:
+                name: "1"
+                id: 1
+                text: "[size=20]Fats Midtown[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton1:
+                name: "2"
+                id: 2
+                text: "[size=20]Fats Downtown[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton2:
+                name: "3"
+                id: 3
+                text: "[size=20]White Buffalo[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton1:
+                name: "4"
+                id: 4
+                text: "[size=20]The Lab[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton2:
+                name: "5"
+                id: 5
+                text: "[size=20]The Social[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton1:
+                name: "6"
+                id: 6
+                text: "[size=20]Bricks[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton2:
+                name: "7"
+                id: 7
+                text: "[size=20]JJ's[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton1:
+                name: "8"
+                id: 8
+                text: "[size=20]Rowdy Reptile[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+            ToggleButton2:
+                name: "9"
+                id: 9
+                text: "[size=20]Salty Dog Saloon[/size]\n Number of votes: 0"
+                on_state: root.togglePressed(self)
+
+    BoxLayout:
+        pos_hint:{"center_x":.5, "top":1}
+        orientation: "vertical"
+        size_hint: (1, None)
+        height: "100dp"
+        VoteStatusLabel: 
+            id: hasVoted
+            text: root.hasVotedText
+            halign: "center"
+            
+    BoxLayout:
+        canvas.before: 
+            Color: 
+                rgba: get_color_from_hex("000000")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        size_hint: 1, None
+        height: "100dp"
+        orientation: "horizontal"
+        spacing: 10
+        padding: 10
+        BackButton3:
+            size_hint: (1, 0.5)
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            text: "Back"
+            on_release: 
+                app.root.current = "voting_or_live"
+                root.manager.transition.direction = "right"
+        RefreshButton:
+            size_hint: (1, 0.5)
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            text: "Refresh"
+            on_release: root.refreshPressed()
+        SubmitButton2: 
+            size_hint: (1, 0.5)
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            text: "Submit Vote"
+            on_release: root.submitPressed()
+
+        #empty label to deal with kivy md scroll view issue
+        Label:
+            size_hint: (0, 0)
+
+            
+
+#welcome screen 
+<Label1@Label>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: (0, 0, 0, 0)
+        RoundedRectangle: 
+            size: self.size
+            pos: self.pos
+            radius: [5]
+
+<NextButton1@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: orange_color1
+    line_color: orange_color1
+    
+
+#Login Screen
+<TextInput1@MDTextField>
+    hint_text: "Username"
+    mode: "round"
+    max_text_length: 20
+    #fill_color_normal: get_color_from_hex("153D61")
+    fill_color_normal: get_color_from_hex("323232")
+    line_color_focus: orange_color1
+    text_color_focus: get_color_from_hex("FFFFFF")
+
+<TextInput2@MDTextField>
+    hint_text: "Password"
+    mode: "round"
+    max_text_length: 20
+    #fill_color_normal: get_color_from_hex("153D61")
+    fill_color_normal: get_color_from_hex("323232")
+    line_color_focus: orange_color1
+    text_color_focus: get_color_from_hex("FFFFFF")
+
+
+
+<SubmitButton1@MDRectangleFlatButton>
+    theme_text_color: "Custom"
+    text_color: blue_color1
+    line_color: blue_color1
+
+<RequestButton@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: orange_color1
+    line_color: orange_color1
+
+<BackButton1@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: orange_color1
+    line_color: orange_color1
+
+
+#voting or live data
+<VotingButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ""
+    canvas.before:
+        Color: 
+            rgba: orange_color1
+        Line:
+            width: 1.
+            rectangle: (self.x, self.y, self.width, self.height)
+
+<LiveDataButton@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: orange_color1
+    line_color: orange_color1
+
+<BackButton2@MDRoundFlatButton>:
+    theme_text_color: "Custom"
+    text_color: blue_color1
+    line_color: blue_color1
+
+
+#voting screen
+<VoteStatusLabel@Label>
+    markup: True
+    canvas.before: 
+        Color: 
+            rgba: get_color_from_hex("000000")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<ToggleButton1@MyToggleButton1>:
+    halign: "center"
+    group: "clubs"
+    size_hint: (1, None)
+    height: "100dp"
+    markup: True
+
+<ToggleButton2@MyToggleButton2>:
+    halign: "center"
+    group: "clubs"
+    size_hint: (1, None)
+    height: "100dp"
+    markup: True
+
+<BackButton3@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: blue_color1
+    line_color: blue_color1
+
+<RefreshButton@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: orange_color1
+    line_color: orange_color1
+    
+<SubmitButton2@MDRectangleFlatButton>:
+    theme_text_color: "Custom"
+    text_color: green_color1
+    line_color: green_color1
+
+        
